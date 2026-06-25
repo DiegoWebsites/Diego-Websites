@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATELIER AURELIA | Conceptdesign</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: #F9F6F2;
+      --surface: #FFFFFF;
+      --copper: #A6806C;
+      --gold: #C5A880;
+      --charcoal: #1A1D23;
+      --body: #50443F;
+      --line: rgba(166, 128, 108, 0.22);
+      --soft: rgba(197, 168, 128, 0.16);
+      --shadow: 0 22px 60px rgba(26, 29, 35, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--body);
+      font-family: "Hanken Grotesk", "Manrope", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .site-shell {
+      width: min(100% - 40px, 1360px);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 20;
+      border-bottom: 1px solid rgba(166, 128, 108, 0.16);
+      background: rgba(249, 246, 242, 0.82);
+      backdrop-filter: blur(20px);
+    }
+
+    .nav {
+      height: 78px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      color: rgba(80, 68, 63, 0.76);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .nav-links:last-child {
+      justify-content: flex-end;
+    }
+
+    .brand {
+      color: var(--charcoal);
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(22px, 2vw, 31px);
+      letter-spacing: 0.14em;
+      white-space: nowrap;
+    }
+
+    .nav-pill {
+      border: 1px solid var(--line);
+      padding: 12px 18px;
+      color: var(--charcoal);
+    }
+
+    main {
+      padding-top: 78px;
+    }
+
+    .section {
+      padding: clamp(72px, 11vw, 150px) 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 22px;
+      color: var(--copper);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 36px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      color: var(--charcoal);
+      font-family: "Playfair Display", Georgia, serif;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      font-size: clamp(54px, 8vw, 112px);
+      line-height: 0.95;
+    }
+
+    h2 {
+      font-size: clamp(38px, 5vw, 68px);
+      line-height: 1.02;
+    }
+
+    h3 {
+      font-size: clamp(26px, 3vw, 38px);
+      line-height: 1.08;
+    }
+
+    p {
+      margin: 0;
+      font-size: clamp(17px, 1.5vw, 20px);
+      line-height: 1.75;
+    }
+
+    .hero {
+      min-height: calc(100vh - 78px);
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(340px, 1.05fr);
+      gap: clamp(36px, 7vw, 104px);
+      align-items: center;
+      padding: clamp(48px, 7vw, 90px) 0;
+    }
+
+    .hero-copy p {
+      max-width: 610px;
+      margin-top: 30px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 42px;
+    }
+
+    .btn {
+      min-height: 54px;
+      border: 1px solid transparent;
+      padding: 0 28px;
+      cursor: default;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--charcoal);
+      background: transparent;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: transform 240ms ease, background 240ms ease, color 240ms ease;
+    }
+
+    .btn.primary {
+      background: var(--charcoal);
+      color: white;
+    }
+
+    .btn.secondary {
+      border-color: rgba(26, 29, 35, 0.18);
+      color: var(--charcoal);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn.primary:hover {
+      background: var(--copper);
+    }
+
+    .hero-art {
+      position: relative;
+      min-height: min(680px, 72vh);
+      isolation: isolate;
+    }
+
+    .hero-frame {
+      position: absolute;
+      inset: 4% 0 0 14%;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.78), rgba(249,246,242,0.52)),
+        repeating-linear-gradient(90deg, rgba(166,128,108,0.08) 0 1px, transparent 1px 20px);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-frame::before {
+      content: "";
+      position: absolute;
+      inset: 10%;
+      border: 1px solid rgba(197, 168, 128, 0.38);
+      transform: rotate(-6deg);
+    }
+
+    .hero-frame::after {
+      content: "";
+      position: absolute;
+      right: -18%;
+      bottom: -14%;
+      width: 62%;
+      aspect-ratio: 1;
+      border: 40px solid rgba(197, 168, 128, 0.24);
+      border-radius: 50%;
+    }
+
+    .gem-large,
+    .gem-small,
+    .atelier-block,
+    .line-study {
+      position: absolute;
+      border: 1px solid rgba(166, 128, 108, 0.28);
+      background: linear-gradient(145deg, rgba(255,255,255,0.94), rgba(197,168,128,0.16));
+    }
+
+    .gem-large {
+      top: 8%;
+      left: 2%;
+      width: 38%;
+      aspect-ratio: 1;
+      clip-path: polygon(50% 0, 92% 28%, 78% 100%, 22% 100%, 8% 28%);
+      box-shadow: 0 30px 70px rgba(166, 128, 108, 0.12);
+    }
+
+    .gem-small {
+      right: 4%;
+      top: 8%;
+      width: 22%;
+      aspect-ratio: 1;
+      clip-path: polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%);
+    }
+
+    .atelier-block {
+      left: 0;
+      bottom: 8%;
+      width: 46%;
+      height: 34%;
+      background:
+        radial-gradient(circle at 26% 30%, rgba(197,168,128,0.35), transparent 0 8%, transparent 9%),
+        linear-gradient(145deg, rgba(255,255,255,0.95), rgba(166,128,108,0.12));
+    }
+
+    .line-study {
+      right: 10%;
+      bottom: 10%;
+      width: 38%;
+      height: 28%;
+      background:
+        linear-gradient(90deg, transparent 0 18%, rgba(166,128,108,0.18) 18% 19%, transparent 19% 44%, rgba(166,128,108,0.18) 44% 45%, transparent 45%),
+        rgba(255,255,255,0.78);
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+      gap: clamp(30px, 8vw, 120px);
+      align-items: end;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .intro p {
+      max-width: 620px;
+      font-size: clamp(22px, 2vw, 30px);
+      line-height: 1.55;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .card {
+      min-height: 430px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(24px, 3vw, 38px);
+      background: var(--surface);
+      border: 1px solid rgba(166, 128, 108, 0.16);
+      box-shadow: 0 16px 36px rgba(26, 29, 35, 0.035);
+    }
+
+    .visual-block {
+      height: 180px;
+      margin-bottom: 34px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(249,246,242,0.95), rgba(197,168,128,0.2)),
+        repeating-linear-gradient(135deg, rgba(80,68,63,0.045) 0 1px, transparent 1px 14px);
+    }
+
+    .visual-block::before,
+    .visual-block::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(166, 128, 108, 0.34);
+    }
+
+    .visual-block.rings::before {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      left: 22%;
+      top: 44px;
+    }
+
+    .visual-block.rings::after {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      left: 42%;
+      top: 24px;
+      border-color: rgba(197, 168, 128, 0.55);
+    }
+
+    .visual-block.custom::before {
+      width: 44%;
+      aspect-ratio: 1;
+      clip-path: polygon(50% 0, 100% 35%, 78% 100%, 22% 100%, 0 35%);
+      left: 29%;
+      top: 18%;
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .visual-block.custom::after {
+      width: 70%;
+      height: 1px;
+      left: 15%;
+      top: 50%;
+      background: rgba(166, 128, 108, 0.22);
+      transform: rotate(-18deg);
+    }
+
+    .visual-block.refine::before {
+      width: 72%;
+      height: 52%;
+      left: 14%;
+      top: 24%;
+      background:
+        linear-gradient(90deg, transparent 0 24%, rgba(166,128,108,0.12) 24% 26%, transparent 26% 58%, rgba(166,128,108,0.12) 58% 60%, transparent 60%);
+    }
+
+    .visual-block.refine::after {
+      width: 36px;
+      height: 36px;
+      right: 20%;
+      top: 28%;
+      border-radius: 50%;
+      background: rgba(197, 168, 128, 0.28);
+    }
+
+    .card p,
+    .craft-copy p,
+    .step p {
+      margin-top: 18px;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .craft {
+      background: var(--surface);
+      border-top: 1px solid rgba(166, 128, 108, 0.12);
+      border-bottom: 1px solid rgba(166, 128, 108, 0.12);
+    }
+
+    .craft-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.88fr) minmax(320px, 1.12fr);
+      gap: clamp(34px, 7vw, 108px);
+      align-items: center;
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 18px;
+      margin-top: 36px;
+      padding-top: 30px;
+      border-top: 1px solid var(--line);
+    }
+
+    .detail {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 18px;
+      align-items: start;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .detail strong {
+      color: var(--copper);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .atelier-placeholder {
+      min-height: 620px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, rgba(249,246,242,0.92), rgba(255,255,255,0.6)),
+        repeating-linear-gradient(0deg, rgba(166,128,108,0.06) 0 1px, transparent 1px 28px);
+      border: 1px solid var(--line);
+    }
+
+    .atelier-placeholder::before {
+      content: "";
+      position: absolute;
+      inset: 12% 18% 26% 10%;
+      border: 1px solid rgba(197, 168, 128, 0.45);
+      background: rgba(255,255,255,0.35);
+    }
+
+    .atelier-placeholder::after {
+      content: "";
+      position: absolute;
+      right: 10%;
+      bottom: 12%;
+      width: 48%;
+      height: 24%;
+      background:
+        radial-gradient(circle at 24% 50%, rgba(166,128,108,0.32), transparent 0 7%, transparent 8%),
+        radial-gradient(circle at 48% 50%, rgba(197,168,128,0.35), transparent 0 7%, transparent 8%),
+        radial-gradient(circle at 72% 50%, rgba(26,29,35,0.10), transparent 0 7%, transparent 8%),
+        rgba(255,255,255,0.62);
+      border: 1px solid rgba(166, 128, 108, 0.2);
+    }
+
+    .floating-note {
+      position: absolute;
+      left: 8%;
+      bottom: 9%;
+      width: min(280px, 70%);
+      padding: 24px;
+      color: var(--charcoal);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(166, 128, 108, 0.18);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: 58px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .step {
+      padding: clamp(24px, 3vw, 38px);
+      background: var(--background);
+    }
+
+    .step-number {
+      display: block;
+      margin-bottom: 40px;
+      color: var(--copper);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+    }
+
+    .cta {
+      padding: clamp(62px, 8vw, 110px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(197,168,128,0.24), transparent 0 22%, transparent 23%),
+        radial-gradient(circle at 92% 88%, rgba(166,128,108,0.16), transparent 0 28%, transparent 29%),
+        var(--surface);
+      border: 1px solid rgba(166, 128, 108, 0.18);
+    }
+
+    .cta p {
+      max-width: 580px;
+      margin: 24px auto 0;
+    }
+
+    .cta .button-row {
+      justify-content: center;
+    }
+
+    .footer {
+      padding: 54px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-end;
+    }
+
+    .footer-brand {
+      color: var(--charcoal);
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 28px;
+      letter-spacing: 0.16em;
+    }
+
+    .concept-note {
+      max-width: 360px;
+      color: rgba(80, 68, 63, 0.72);
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: right;
+    }
+
+    @media (max-width: 980px) {
+      .nav {
+        grid-template-columns: 1fr;
+        height: auto;
+        padding: 20px 0;
+        text-align: center;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      main {
+        padding-top: 74px;
+      }
+
+      .hero,
+      .intro,
+      .craft-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-art {
+        min-height: 540px;
+      }
+
+      .cards-grid,
+      .steps {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .site-shell {
+        width: min(100% - 28px, 1360px);
+      }
+
+      .section {
+        padding: 66px 0;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 42px;
+      }
+
+      .hero-art {
+        min-height: 420px;
+      }
+
+      .hero-frame {
+        inset: 6% 0 0 8%;
+      }
+
+      .cards-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: 360px;
+      }
+
+      .atelier-placeholder {
+        min-height: 460px;
+      }
+
+      .detail {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .footer-inner {
+        display: grid;
+        align-items: start;
+      }
+
+      .concept-note {
+        text-align: left;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="site-shell nav" aria-label="Conceptnavigatie">
+      <div class="nav-links" aria-hidden="true">
+        <span>Atelier</span>
+        <span>Werkwijze</span>
+      </div>
+      <div class="brand">ATELIER AURELIA</div>
+      <div class="nav-links" aria-hidden="true">
+        <span>Ontwerp</span>
+        <span class="nav-pill">Gesprek</span>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="site-shell hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Persoonlijk gemaakt</p>
+        <h1 id="hero-title">Sieraden met een verhaal.</h1>
+        <p>Een fictief concept voor een atelier waar vakmanschap, persoonlijke aandacht en tijdloos ontwerp samenkomen.</p>
+        <div class="button-row" aria-label="Visuele call-to-actions">
+          <button class="btn primary" type="button">Bekijk het atelier</button>
+          <button class="btn secondary" type="button">Plan een gesprek</button>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Abstracte luxe hero compositie">
+        <div class="hero-frame"></div>
+        <div class="gem-large"></div>
+        <div class="gem-small"></div>
+        <div class="atelier-block"></div>
+        <div class="line-study"></div>
+      </div>
+    </section>
+
+    <section class="site-shell section intro" aria-labelledby="intro-title">
+      <h2 id="intro-title">Geen standaard ontwerp.</h2>
+      <p>Elk ontwerp begint met een gesprek, een idee en aandacht voor de details.</p>
+    </section>
+
+    <section class="site-shell section" aria-labelledby="directions-title">
+      <p class="eyebrow">Drie richtingen</p>
+      <h2 id="directions-title">Rustige keuzes, zorgvuldig uitgewerkt.</h2>
+      <div class="cards-grid">
+        <article class="card">
+          <div>
+            <div class="visual-block rings" aria-hidden="true"></div>
+            <h3>Trouwringen</h3>
+            <p>Een ingetogen basis voor ringen die dagelijks gedragen mogen worden.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div>
+            <div class="visual-block custom" aria-hidden="true"></div>
+            <h3>Persoonlijk ontwerp</h3>
+            <p>Een vormstudie waarin herinnering, materiaal en proportie samenkomen.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div>
+            <div class="visual-block refine" aria-hidden="true"></div>
+            <h3>Herstel &amp; verfijning</h3>
+            <p>Een aandachtige benadering voor stukken die opnieuw balans verdienen.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="craft section" aria-labelledby="craft-title">
+      <div class="site-shell craft-layout">
+        <div class="craft-copy">
+          <p class="eyebrow">Vakmanschap</p>
+          <h2 id="craft-title">Gemaakt met aandacht.</h2>
+          <p>In dit fictieve atelier draait elk ontwerp om rust, precisie en een zorgvuldig gesprek. Geen haastige keuzes, maar een subtiele zoektocht naar vorm, betekenis en draagbaarheid.</p>
+          <div class="detail-list">
+            <div class="detail">
+              <strong>Materiaal</strong>
+              <span>Warme tinten, ingetogen glans en een palet dat ruimte laat voor het ontwerp.</span>
+            </div>
+            <div class="detail">
+              <strong>Vorm</strong>
+              <span>Zachte lijnen, heldere verhoudingen en composities zonder overbodige details.</span>
+            </div>
+            <div class="detail">
+              <strong>Ritme</strong>
+              <span>Een rustige opbouw van idee naar schets, verfijning en afronding.</span>
+            </div>
+          </div>
+        </div>
+        <div class="atelier-placeholder" aria-label="Abstracte atelier-placeholder zonder foto">
+          <div class="floating-note">Editorial placeholder: een rustige, champagnekleurige compositie voor sfeer, materiaal en ateliergevoel.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="site-shell section" aria-labelledby="process-title">
+      <p class="eyebrow">Werkwijze</p>
+      <h2 id="process-title">Van eerste idee naar afgerond ontwerp.</h2>
+      <div class="steps">
+        <article class="step">
+          <span class="step-number">01</span>
+          <h3>Kennismaken</h3>
+          <p>Een rustig gesprek over het verhaal, de stijl en de gewenste richting.</p>
+        </article>
+        <article class="step">
+          <span class="step-number">02</span>
+          <h3>Ontwerp bespreken</h3>
+          <p>De eerste lijnen, materialen en verhoudingen worden zorgvuldig verkend.</p>
+        </article>
+        <article class="step">
+          <span class="step-number">03</span>
+          <h3>Verfijnen</h3>
+          <p>Details worden aangescherpt tot het ontwerp helder en persoonlijk voelt.</p>
+        </article>
+        <article class="step">
+          <span class="step-number">04</span>
+          <h3>Opleveren</h3>
+          <p>Het fictieve ontwerp krijgt een rustige, premium presentatie zonder verkooplaag.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="site-shell section" aria-labelledby="cta-title">
+      <div class="cta">
+        <p class="eyebrow">Ateliergesprek</p>
+        <h2 id="cta-title">Jouw idee verdient aandacht.</h2>
+        <p>Plan een rustig gesprek en ontdek welke richting bij jouw verhaal past.</p>
+        <div class="button-row" aria-label="Visuele call-to-actions">
+          <button class="btn primary" type="button">Plan een afspraak</button>
+          <button class="btn secondary" type="button">Neem contact op</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="site-shell footer-inner">
+      <div class="footer-brand">ATELIER AURELIA</div>
+      <p class="concept-note">Conceptdesign — voorbeeld van een mogelijke website-richting.</p>
+    </div>
+  </footer>
+</body>
+</html>

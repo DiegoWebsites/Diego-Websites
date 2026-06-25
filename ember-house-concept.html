@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EMBER HOUSE | Conceptdesign</title>
+  <style>
+    :root {
+      --black: #121212;
+      --green: #193528;
+      --amber: #D6B24B;
+      --cream: #E9E2D4;
+      --muted: #A7AAA5;
+      --panel: #181b19;
+      --line: rgba(214, 178, 75, 0.28);
+      --soft-line: rgba(233, 226, 212, 0.1);
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(25, 53, 40, 0.7), transparent 34rem),
+        radial-gradient(circle at 90% 18%, rgba(214, 178, 75, 0.11), transparent 24rem),
+        var(--black);
+      color: var(--cream);
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image:
+        linear-gradient(rgba(233, 226, 212, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(233, 226, 212, 0.025) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, #000, transparent 75%);
+      z-index: -1;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .wrap {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(18, 18, 18, 0.78);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+    }
+
+    .mark {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--amber);
+      display: grid;
+      place-items: center;
+      color: var(--amber);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 17px;
+      line-height: 1;
+      background: linear-gradient(145deg, rgba(214, 178, 75, 0.16), rgba(25, 53, 40, 0.22));
+    }
+
+    .navlinks {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .navlinks a:hover {
+      color: var(--amber);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--amber);
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 18px;
+      height: 1px;
+      margin: 5px auto;
+      background: currentColor;
+    }
+
+    main {
+      overflow: hidden;
+    }
+
+    section {
+      padding: 112px 0;
+    }
+
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      align-items: end;
+      padding: 136px 0 76px;
+      position: relative;
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .hero-art {
+      position: absolute;
+      inset: 72px 0 0;
+      overflow: hidden;
+      opacity: 0.95;
+    }
+
+    .hero-art::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 68% 35%, rgba(214, 178, 75, 0.22), transparent 18rem),
+        radial-gradient(circle at 32% 45%, rgba(25, 53, 40, 0.85), transparent 26rem),
+        linear-gradient(135deg, rgba(18, 18, 18, 0.22), rgba(18, 18, 18, 0.94) 78%);
+    }
+
+    .hero-art::after {
+      content: "";
+      position: absolute;
+      width: min(64vw, 780px);
+      aspect-ratio: 1;
+      right: -8vw;
+      top: 6vh;
+      border: 1px solid rgba(214, 178, 75, 0.3);
+      border-radius: 50%;
+      box-shadow:
+        inset 0 0 0 28px rgba(214, 178, 75, 0.018),
+        inset 0 0 0 80px rgba(25, 53, 40, 0.18),
+        0 0 90px rgba(214, 178, 75, 0.08);
+    }
+
+    .hero-lines {
+      position: absolute;
+      inset: auto 0 0;
+      height: 42%;
+      background:
+        linear-gradient(105deg, transparent 0 18%, rgba(214, 178, 75, 0.32) 18% 18.2%, transparent 18.2% 100%),
+        linear-gradient(112deg, transparent 0 53%, rgba(233, 226, 212, 0.1) 53% 53.1%, transparent 53.1% 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--amber);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 46px;
+      height: 1px;
+      background: var(--amber);
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 740px;
+      font-size: clamp(4rem, 10vw, 7.8rem);
+      line-height: 0.92;
+    }
+
+    h2 {
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: 1.02;
+    }
+
+    h3 {
+      font-size: clamp(1.55rem, 3vw, 2.1rem);
+      line-height: 1.08;
+    }
+
+    .lead {
+      max-width: 630px;
+      color: var(--muted);
+      font-size: clamp(1.04rem, 2vw, 1.24rem);
+      margin: 26px 0 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 38px;
+    }
+
+    .btn {
+      display: inline-flex;
+      min-height: 50px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 28px;
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      background: transparent;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: default;
+      transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn.primary {
+      background: var(--amber);
+      color: #1d1706;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(260px, 0.55fr);
+      gap: 48px;
+      align-items: end;
+      margin-bottom: 54px;
+    }
+
+    .section-head p,
+    .editorial p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .intro-rule {
+      height: 100%;
+      min-height: 180px;
+      background: linear-gradient(to bottom, transparent, var(--line), transparent);
+    }
+
+    .intro-copy {
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    .mini-note {
+      color: var(--amber);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .feature-card {
+      min-height: 460px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      border: 1px solid var(--soft-line);
+      background: var(--panel);
+      padding: 28px;
+    }
+
+    .feature-card:nth-child(2) {
+      margin-top: 44px;
+    }
+
+    .visual {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 28% 24%, rgba(214, 178, 75, 0.18), transparent 11rem),
+        radial-gradient(circle at 80% 72%, rgba(25, 53, 40, 0.82), transparent 16rem),
+        linear-gradient(135deg, #111, #1b211d 60%, #111);
+    }
+
+    .visual::before,
+    .visual::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(214, 178, 75, 0.28);
+    }
+
+    .visual::before {
+      width: 58%;
+      aspect-ratio: 1;
+      right: 12%;
+      top: 13%;
+      border-radius: 50%;
+    }
+
+    .visual::after {
+      width: 1px;
+      height: 72%;
+      left: 19%;
+      top: 14%;
+      background: rgba(214, 178, 75, 0.08);
+      transform: rotate(18deg);
+    }
+
+    .feature-card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-card h3 {
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .editorial {
+      display: grid;
+      grid-template-columns: minmax(0, 0.78fr) minmax(320px, 0.72fr);
+      gap: 72px;
+      align-items: center;
+    }
+
+    .editorial-copy {
+      display: grid;
+      gap: 24px;
+    }
+
+    .mood-block {
+      min-height: 520px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(145deg, rgba(214, 178, 75, 0.09), transparent 30%),
+        radial-gradient(circle at 58% 28%, rgba(214, 178, 75, 0.18), transparent 12rem),
+        radial-gradient(circle at 45% 64%, rgba(25, 53, 40, 0.8), transparent 18rem),
+        #101210;
+    }
+
+    .mood-block::before {
+      content: "";
+      position: absolute;
+      inset: 28px;
+      border: 1px solid rgba(233, 226, 212, 0.08);
+    }
+
+    .mood-block::after {
+      content: "";
+      position: absolute;
+      width: 54%;
+      height: 68%;
+      right: 10%;
+      bottom: 8%;
+      border: 1px solid rgba(214, 178, 75, 0.34);
+      border-radius: 52% 48% 8% 8%;
+      box-shadow: 0 0 70px rgba(214, 178, 75, 0.08);
+    }
+
+    .menu-preview {
+      background:
+        linear-gradient(rgba(25, 53, 40, 0.2), rgba(18, 18, 18, 0.2)),
+        var(--black);
+      border-top: 1px solid var(--soft-line);
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .menu-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 42px;
+    }
+
+    .menu-item {
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .menu-item h3 {
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+
+    .menu-item p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .cta {
+      text-align: center;
+      position: relative;
+    }
+
+    .cta .wrap {
+      position: relative;
+      padding: 96px 24px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(214, 178, 75, 0.15), transparent 22rem),
+        linear-gradient(135deg, rgba(25, 53, 40, 0.58), rgba(18, 18, 18, 0.9));
+    }
+
+    .cta p {
+      max-width: 520px;
+      margin: 22px auto 0;
+      color: var(--muted);
+    }
+
+    .footer {
+      padding: 54px 0 96px;
+      color: var(--muted);
+      border-top: 1px solid var(--soft-line);
+      text-align: center;
+    }
+
+    .footer-brand {
+      color: var(--amber);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2rem;
+      letter-spacing: 0.14em;
+      margin-bottom: 8px;
+    }
+
+    .concept {
+      font-size: 0.78rem;
+    }
+
+    .mobile-dock {
+      display: none;
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 25;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      background: rgba(18, 18, 18, 0.9);
+      backdrop-filter: blur(18px);
+    }
+
+    .mobile-dock a {
+      min-height: 48px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .mobile-dock a:first-child {
+      background: rgba(214, 178, 75, 0.14);
+      color: var(--amber);
+    }
+
+    @media (max-width: 840px) {
+      .wrap {
+        width: min(calc(100% - 32px), var(--max));
+      }
+
+      .nav {
+        height: 66px;
+      }
+
+      .navlinks {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      section {
+        padding: 78px 0;
+      }
+
+      .hero {
+        min-height: 92svh;
+        padding-top: 120px;
+        padding-bottom: 92px;
+      }
+
+      .hero-art {
+        inset: 66px 0 0;
+      }
+
+      .hero-art::after {
+        width: 92vw;
+        right: -36vw;
+        top: 12vh;
+      }
+
+      .actions {
+        width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .section-head,
+      .intro-grid,
+      .editorial,
+      .menu-list {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        gap: 22px;
+        margin-bottom: 36px;
+      }
+
+      .intro-rule {
+        min-height: 1px;
+        height: 1px;
+        background: var(--line);
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-card,
+      .feature-card:nth-child(2) {
+        min-height: 340px;
+        margin-top: 0;
+      }
+
+      .editorial {
+        gap: 36px;
+      }
+
+      .mood-block {
+        min-height: 360px;
+      }
+
+      .cta .wrap {
+        padding: 70px 18px;
+      }
+
+      .footer {
+        padding-bottom: 110px;
+      }
+
+      .mobile-dock {
+        display: grid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav wrap" aria-label="Hoofdnavigatie">
+      <a class="brand" href="#" aria-label="EMBER HOUSE">
+        <span class="mark">E</span>
+        <span>EMBER HOUSE</span>
+      </a>
+      <div class="navlinks">
+        <a href="#sfeer">Sfeer</a>
+        <a href="#selectie">Selectie</a>
+        <a href="#menu">Preview</a>
+        <a href="#">Reserveer</a>
+      </div>
+      <button class="menu-toggle" aria-label="Menu" type="button">
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-lines"></div>
+      </div>
+      <div class="wrap hero-content">
+        <span class="eyebrow">Cocktails, bites en avonden die blijven hangen.</span>
+        <h1>Avonden met karakter.</h1>
+        <p class="lead">Een fictief concept voor een moderne cocktailbar waar sfeer, smaak en design samenkomen.</p>
+        <div class="actions">
+          <a class="btn primary" href="#sfeer">Bekijk sfeer</a>
+          <a class="btn" href="#">Reserveer een tafel</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="intro wrap" id="sfeer">
+      <div class="intro-grid">
+        <div>
+          <span class="mini-note">Modern shared dining concept</span>
+          <h2>Meer dan een drankje.</h2>
+        </div>
+        <div class="intro-rule" aria-hidden="true"></div>
+        <p class="intro-copy">EMBER HOUSE is een fictieve plek voor lange tafels, lage verlichting en cocktails met een uitgesproken signatuur. De avond begint rustig met verfijnde bites om te delen en beweegt langzaam naar een warme, levendige barsfeer.</p>
+      </div>
+    </section>
+
+    <section class="wrap" id="selectie">
+      <div class="section-head">
+        <div>
+          <span class="mini-note">Signature selectie</span>
+          <h2>Drie manieren om de avond te openen.</h2>
+        </div>
+        <p>Abstracte visuele kaarten zonder productfotografie, opgebouwd uit donkere texturen, gouden lijnen en zachte groentinten.</p>
+      </div>
+      <div class="cards">
+        <article class="feature-card">
+          <div class="visual" aria-hidden="true"></div>
+          <div class="feature-card-content">
+            <span class="mini-note">01</span>
+            <h3>Signature cocktails</h3>
+            <p>Gelaagde smaken, helder geserveerd en ontworpen voor het eerste moment van de avond.</p>
+          </div>
+        </article>
+        <article class="feature-card">
+          <div class="visual" aria-hidden="true"></div>
+          <div class="feature-card-content">
+            <span class="mini-note">02</span>
+            <h3>Shared dining</h3>
+            <p>Kleine gerechten aan tafel, bedoeld om te delen zonder dat de avond zijn ritme verliest.</p>
+          </div>
+        </article>
+        <article class="feature-card">
+          <div class="visual" aria-hidden="true"></div>
+          <div class="feature-card-content">
+            <span class="mini-note">03</span>
+            <h3>Late nights</h3>
+            <p>Donkerder, warmer en losser naarmate de uren verschuiven richting nacht.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="editorial">
+        <div class="editorial-copy">
+          <span class="mini-note">Over de sfeer</span>
+          <h2>Rustig vroeg. Levendig laat.</h2>
+          <p>De ruimte is bedacht als een overgang van diner naar bar: ingetogen bij binnenkomst, voller in klank en kleur wanneer de avond langer wordt. Zwartgroene vlakken, dunne amberlijnen en warme crèmetekst zorgen voor een rustige, premium basis.</p>
+          <p>Geen drukke decoratie, maar een editorial ritme met ademruimte: compacte teksten, stille visuals en genoeg contrast om mobiel net zo sterk te blijven als op desktop.</p>
+        </div>
+        <div class="mood-block" aria-label="Abstract sfeerblok zonder foto"></div>
+      </div>
+    </section>
+
+    <section class="menu-preview" id="menu">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="mini-note">Menu-preview</span>
+            <h2>Een korte blik op fictieve signatures.</h2>
+          </div>
+          <p>Geen prijzen, geen echte menukaart en geen reserveringssysteem. Alleen sfeer en richting voor het concept.</p>
+        </div>
+        <div class="menu-list">
+          <article class="menu-item">
+            <h3>Ember Spritz</h3>
+            <p>Bitterzoete citrus, zachte kruiden en een droge sprankel.</p>
+          </article>
+          <article class="menu-item">
+            <h3>Golden Hour</h3>
+            <p>Rijpe sinaasappel, lichte vanille en een warm amberaccent.</p>
+          </article>
+          <article class="menu-item">
+            <h3>Forest Sour</h3>
+            <p>Frisse limoen, groene tonen en een fluweelzachte afdronk.</p>
+          </article>
+          <article class="menu-item">
+            <h3>Midnight Espresso</h3>
+            <p>Donkere koffie, cacao en een romige late-night finish.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap">
+        <span class="mini-note">EMBER HOUSE</span>
+        <h2>Een plek voor lange avonden.</h2>
+        <p>Een portfolio-concept voor een moderne Nederlandse cocktailbar waar shared dining, sfeer en nachtelijke elegantie samenkomen.</p>
+        <div class="actions" style="justify-content: center;">
+          <a class="btn primary" href="#">Reserveer een tafel</a>
+          <a class="btn" href="#">Bekijk Instagram</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-brand">EMBER HOUSE</div>
+      <div class="concept">Conceptdesign — voorbeeld van een mogelijke website-richting.</div>
+    </div>
+  </footer>
+
+  <nav class="mobile-dock" aria-label="Mobiele navigatie">
+    <a href="#top">Home</a>
+    <a href="#sfeer">Sfeer</a>
+    <a href="#selectie">Selectie</a>
+    <a href="#menu">Menu</a>
+  </nav>
+</body>
+</html>
